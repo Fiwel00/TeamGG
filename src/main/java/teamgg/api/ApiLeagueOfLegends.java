@@ -1,6 +1,5 @@
 package teamgg.api;
 
-import static com.ea.async.Async.await;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
