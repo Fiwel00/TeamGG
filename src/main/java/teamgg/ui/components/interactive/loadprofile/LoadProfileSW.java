@@ -34,7 +34,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	@Override
 	protected Integer doInBackground() throws TeamGGException {
 
-		long currentTimeMillis = System.currentTimeMillis() - ((24*60*60*1000) * 7);
+		long currentTimeMinus10Days = System.currentTimeMillis() - ((24*60*60*1000) * 10);
 		
 		String summonerName = ProfileInformation.getSummonerNameInput();
 		ConsoleHelper.info("Summoner name in input is %s", summonerName);
@@ -46,7 +46,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 			
 			summoner = ApiLeagueOfLegends.loadPlayerOri(summonerName);
 			addPlayerToDB(summoner);
-		} else if (summoner.getRevisionDate() < currentTimeMillis) {
+		} else if (summoner.getRevisionDate() < currentTimeMinus10Days) {
 			ConsoleHelper.info("Database entry is too old, updating ");
 			
 			summoner = ApiLeagueOfLegends.loadPlayerOri(summonerName);
@@ -57,7 +57,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 
 		
 		
-		//loadMatchHistory(summoner);
+		loadMatchHistory(summoner);
 		return 1;
 	}
 
