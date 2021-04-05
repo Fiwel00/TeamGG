@@ -85,7 +85,7 @@ public class DBWriteRelationship extends MongoTeamGGClient {
 				}
 
 			}
-			//write in bulk the new one
+			//write in bulk the new relationships that were found 
 			if(newRelationshipDocuments.isEmpty() == false) {
 				relationshipCollection.insertMany(newRelationshipDocuments);
 			}
