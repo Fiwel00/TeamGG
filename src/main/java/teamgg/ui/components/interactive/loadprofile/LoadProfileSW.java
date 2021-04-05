@@ -20,8 +20,12 @@ import teamgg.data.relationship.dto.Relationship;
 import teamgg.data.staticmodel.ProfileInformation;
 import teamgg.data.summonerinfo.SummonerInfoFactory;
 import teamgg.data.summonerinfo.dto.SummonerInfo;
-import teamgg.database.client.DBReadClient;
-import teamgg.database.client.DBWriteClient;
+import teamgg.database.client.match.DBReadMatch;
+import teamgg.database.client.match.DBWriteMatch;
+import teamgg.database.client.player.DBReadPlayer;
+import teamgg.database.client.player.DBWritePlayer;
+import teamgg.database.client.relationship.DBReadRelationship;
+import teamgg.database.client.relationship.DBWriteRelationship;
 import teamgg.database.fields.PlayersFieldsEnum;
 
 public class LoadProfileSW extends SwingWorker<Integer, Void>{
@@ -43,10 +47,10 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 		}
 		
 		updateUI(summoner);
+
 		
 		
 		loadMatchHistory(summoner);
-		
 		return 1;
 	}
 
@@ -139,7 +143,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 */
 	private void addToDb(Summoner summoner) throws TeamGGException {
 		SummonerInfo summonerInfo = SummonerInfoFactory.createSummmonerInfo(summoner);		
-		DBWriteClient.addNewPlayer(summonerInfo);
+		DBWritePlayer.addNewPlayer(summonerInfo);
 	}
 
 	/**
@@ -149,16 +153,9 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 * @throws TeamGGException 
 	 */
 	private boolean isPlayerInDb(Summoner summoner) throws TeamGGException {
-		return DBReadClient.readPlayer(PlayersFieldsEnum.ACCOUNT_ID, summoner.getAccountId()) == null ? false : true;
+		return DBReadPlayer.readPlayer(PlayersFieldsEnum.ACCOUNT_ID, summoner.getAccountId()) == null ? false : true;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	private boolean getBreakSearch() {
-		return false;
-	}
 
 	/**
 	 * 
@@ -168,8 +165,8 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 */
 	private void addToDb(List<Relationship> relationships, Match match) throws TeamGGException {
 
-		DBWriteClient.addRelationShips(relationships);
-		DBWriteClient.addNewMatch(MatchFactory.createMatch(match));
+		DBWriteRelationship.addRelationShips(relationships);
+		DBWriteMatch.addNewMatch(MatchFactory.createMatch(match));
 		
 	}
 
@@ -247,7 +244,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 		String accountId2 = nextPlayerToCompareTo.getSummoner().getAccountId();
 		
 		//check db
-		Relationship relationship = DBReadClient.readRelationShip(accountId1, accountId2);
+		Relationship relationship = DBReadRelationship.readRelationShip(accountId1, accountId2);
 		
 		if (relationship == null) {
 			//create relationship
@@ -288,7 +285,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 		for (Match match : matchHistory) {
 			
 			//look up in db if it exist, if it doesn't add it
-			if (DBReadClient.readMatch(match.getId()) == null){
+			if (DBReadMatch.readMatch(match.getId()) == null){
 				
 				matches.add(match);
 			}
@@ -304,7 +301,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 * @throws TeamGGException
 	 */
 	private void updateDatabase(SummonerInfo summonerInfo) throws TeamGGException {
-		DBWriteClient.addNewPlayer(summonerInfo);
+		DBWritePlayer.addNewPlayer(summonerInfo);
 	}
 
 	/**
@@ -325,7 +322,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 */
 	private SummonerInfo checkDataBase(String summonerName) throws TeamGGException {
 		ConsoleHelper.info("Checking database");
-		return DBReadClient.readPlayer(PlayersFieldsEnum.SUMMONER_NAME_LW, summonerName);
+		return DBReadPlayer.readPlayer(PlayersFieldsEnum.SUMMONER_NAME_LW, summonerName);
 		
 	}
 	

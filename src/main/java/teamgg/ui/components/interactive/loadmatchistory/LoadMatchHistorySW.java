@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import teamgg.data.relationship.dto.RelationshipEnriched;
 import teamgg.data.staticmodel.MatchInformation;
 import teamgg.data.staticmodel.ProfileInformation;
-import teamgg.database.client.DBReadClient;
+import teamgg.database.client.relationship.DBReadRelationship;
 
 public class LoadMatchHistorySW extends SwingWorker<Integer, Void> {
 
@@ -20,7 +20,7 @@ public class LoadMatchHistorySW extends SwingWorker<Integer, Void> {
 		String accountId = ProfileInformation.getAccountId();
 		
 		//read data in db all his relationship
-		List<RelationshipEnriched> relationships = DBReadClient.readRelationShips(accountId);
+		List<RelationshipEnriched> relationships = DBReadRelationship.readRelationShips(accountId);
 		
 		for (RelationshipEnriched relationship : relationships) {
 			//format the data in a user friendly way where the search account is always in first position

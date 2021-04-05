@@ -1,4 +1,4 @@
-package teamgg.database.client;
+package teamgg.database.client.relationship;
 
 import static com.mongodb.client.model.Aggregates.lookup;
 import static com.mongodb.client.model.Filters.and;
@@ -17,73 +17,18 @@ import com.mongodb.client.model.Aggregates;
 
 import errorhandling.ConsoleHelper;
 import errorhandling.TeamGGException;
-import teamgg.data.match.MatchFactory;
-import teamgg.data.match.dto.Match;
 import teamgg.data.relationship.RelationshipFactory;
 import teamgg.data.relationship.RelationshipUIFactory;
 import teamgg.data.relationship.dto.Relationship;
 import teamgg.data.relationship.dto.RelationshipEnriched;
-import teamgg.data.summonerinfo.SummonerInfoFactory;
-import teamgg.data.summonerinfo.dto.SummonerInfo;
 import teamgg.database.MongoTeamGGClient;
-import teamgg.database.fields.MatchesFieldEnum;
 import teamgg.database.fields.PlayersFieldsEnum;
-import teamgg.database.fields.RelationshipFieldsEnum;
+import teamgg.database.fields.RelationshipDBFields;
 import teamgg.database.fields.RelationshipFieldsUIEnum;
 
-public class DBReadClient extends MongoTeamGGClient{
+public class DBReadRelationship extends MongoTeamGGClient{
 
 	
-	public DBReadClient() throws TeamGGException {
-		super();
-	}
-
-	/**
-	 * 
-	 * @param summonerIdentifier
-	 * @return
-	 * @throws TeamGGException
-	 */
-	public static SummonerInfo readPlayer(PlayersFieldsEnum field, String summonerIdentifier) throws TeamGGException {
-		
-		SummonerInfo summonerInfo = null;
-		try (MongoClient client = createNewMongoInstance()) {
-			ConsoleHelper.info("Searching DB Player Collection %s" , field.toString(), summonerIdentifier);
-			
-			if (field.equals(PlayersFieldsEnum.SUMMONER_NAME_LW)) {
-				summonerIdentifier = summonerIdentifier.toLowerCase();
-			}
-			
-			Document summonerDocument = getPlayersColletion().find(eq(field.toString(), summonerIdentifier)).first();
-			
-			if ((summonerDocument == null ) == false) {
-				ConsoleHelper.info(summonerDocument.toJson());
-				summonerInfo = SummonerInfoFactory.createSummmonerInfo(summonerDocument);
-				
-			}
-		}
-		return summonerInfo;
-	}
-
-	/**
-	 * 
-	 * @param gameId
-	 * @return
-	 * @throws TeamGGException
-	 */
-	public static Match readMatch(long gameId) throws TeamGGException {
-		Match match = null;
-		try (MongoClient client = createNewMongoInstance()) {
-			
-			Document matchDocument = getMatchesColletion().find(eq(MatchesFieldEnum.GAME_ID.toString(), gameId)).first();
-			
-			if ((matchDocument == null ) == false) {
-				ConsoleHelper.info(matchDocument.toJson());
-				match = MatchFactory.createMatch(matchDocument);
-			}
-		}
-		return match;
-	}
 
 	/**
 	 * 
@@ -97,11 +42,11 @@ public class DBReadClient extends MongoTeamGGClient{
 		Relationship relationShip = null;
 		try (MongoClient client = createNewMongoInstance()) {
 			
-			Bson filter = and(eq(RelationshipFieldsEnum.ACCOUNT_ID_1.toString(), accountId1), eq(RelationshipFieldsEnum.ACCOUNT_ID_2.toString(), accountId2));
+			Bson filter = and(eq(RelationshipDBFields.ACCOUNT_ID_1.toString(), accountId1), eq(RelationshipDBFields.ACCOUNT_ID_2.toString(), accountId2));
 			Document relationshipDocument = getRelationshipColletion().find(filter).first();
 			
 			if (relationshipDocument == null) {
-				filter = and(eq(RelationshipFieldsEnum.ACCOUNT_ID_1.toString(), accountId2), eq(RelationshipFieldsEnum.ACCOUNT_ID_2.toString(), accountId1));
+				filter = and(eq(RelationshipDBFields.ACCOUNT_ID_1.toString(), accountId2), eq(RelationshipDBFields.ACCOUNT_ID_2.toString(), accountId1));
 				relationshipDocument = getRelationshipColletion().find(filter).first();
 			}
 			
@@ -126,8 +71,8 @@ public class DBReadClient extends MongoTeamGGClient{
 
 			List<Document> relationshipsDocument = new ArrayList<>();
 
-			String fieldAccount1 = RelationshipFieldsEnum.ACCOUNT_ID_1.toString();
-			String fieldAccount2 = RelationshipFieldsEnum.ACCOUNT_ID_2.toString();
+			String fieldAccount1 = RelationshipDBFields.ACCOUNT_ID_1.toString();
+			String fieldAccount2 = RelationshipDBFields.ACCOUNT_ID_2.toString();
 
 			String fieldSummoner1 = RelationshipFieldsUIEnum.SUMMONER_1.toString();
 			String fieldSummoner2 = RelationshipFieldsUIEnum.SUMMONER_2.toString();

@@ -2,7 +2,6 @@ package teamgg.ui.components.interactive.loadprofile;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.ExecutionException;
 
 public class LoadProfileAL implements ActionListener {
 
