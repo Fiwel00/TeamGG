@@ -26,8 +26,8 @@ public class ProfileView extends JPanel{
 		setBackground(Color.GRAY);
 
 		setProfileButton(new LoadProfileButton());
-		setProfilInfolabel(new ProfileInfo());
 		setSummonerInput(new SummonerInput());
+		setProfilInfolabel(new ProfileInfo());
 	
 	}
 
@@ -54,7 +54,7 @@ public class ProfileView extends JPanel{
 
 
 	public void setProfilInfolabel(ProfileInfo profilInfolabel) {
-		add(profilInfolabel, BorderLayout.EAST);
+		add(profilInfolabel, BorderLayout.SOUTH);
 		setProfilInfolabelStatic(profilInfolabel);
 	}
 
@@ -70,7 +70,7 @@ public class ProfileView extends JPanel{
 
 
 	public void setSummonerInput(SummonerInput summonerInput) {
-		add(summonerInput, BorderLayout.SOUTH);
+		add(summonerInput, BorderLayout.NORTH);
 		setSummonerInputStatic(summonerInput);
 	}
 

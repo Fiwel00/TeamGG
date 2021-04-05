@@ -3,6 +3,7 @@ package teamgg.data;
 import java.util.List;
 
 import errorhandling.ConsoleHelper;
+import errorhandling.customexception.MatchInfoUpdateFailedException;
 import teamgg.ui.components.matchInfo.MatchGrid;
 import teamgg.ui.components.profileinfo.ProfileInfo;
 import teamgg.ui.views.MatchInfoView;
@@ -60,8 +61,9 @@ public class updateUI {
 	 * 
 	 * @param updateValues
 	 * @throws InvalidUpdatePipelineException
+	 * @throws MatchInfoUpdateFailedException 
 	 */
-	public static void updateMatches(List<FieldIdValues> updateValues) throws InvalidUpdatePipelineException {
+	public static void updateMatches(List<FieldIdValues> updateValues) throws InvalidUpdatePipelineException, MatchInfoUpdateFailedException {
 		
 		MatchGrid matchInfoGrid = MatchInfoView.getMatchGrid();
 		

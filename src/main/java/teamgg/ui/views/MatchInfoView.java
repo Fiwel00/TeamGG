@@ -1,8 +1,10 @@
 package teamgg.ui.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import errorhandling.TeamGGException;
 import teamgg.ui.components.interactive.loadmatchistory.LoadMatchHistoryButton;
@@ -39,7 +41,11 @@ public class MatchInfoView extends JPanel {
 	 * @param matchInfo
 	 */
 	private void setMatchRelationships(MatchGrid matchInfo) {
-		add(matchInfo);
+		JScrollPane matchGridPane = new JScrollPane(matchInfo, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		matchGridPane.setPreferredSize(new Dimension(800, 600));
+		matchGridPane.getVerticalScrollBar().setUnitIncrement(16);
+		
+		add(matchGridPane);
 		setMatchRelationshipsStatic(matchInfo);
 	}
 

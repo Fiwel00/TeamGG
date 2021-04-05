@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import errorhandling.ConsoleHelper;
+import errorhandling.customexception.MatchInfoUpdateFailedException;
 import teamgg.data.FieldIdValues;
 import teamgg.data.FieldIdsEnum;
 import teamgg.data.InvalidUpdatePipelineException;
@@ -23,7 +24,7 @@ public class MatchInformation {
 	private static List<RelationshipEnriched> relationships;
 	private static List<FieldIdValues> updateValues = new ArrayList<>();
 
-	private static void checkUpdate(boolean update) throws InvalidUpdatePipelineException {
+	private static void checkUpdate(boolean update) throws InvalidUpdatePipelineException, MatchInfoUpdateFailedException {
 		if (update) {
 			updateUI.updateMatches(updateValues);
 			updateValues = new ArrayList<>();
@@ -34,7 +35,7 @@ public class MatchInformation {
 		return relationships;
 	}
 
-	public static void setRelationships(List<RelationshipEnriched> relationships, boolean update) throws InvalidUpdatePipelineException {
+	public static void setRelationships(List<RelationshipEnriched> relationships, boolean update) throws InvalidUpdatePipelineException, MatchInfoUpdateFailedException {
 		ConsoleHelper.info("update relationships in ui  %s", update);
 		MatchInformation.relationships = relationships;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.MATCH_GRID, getRelationships()));

@@ -10,6 +10,7 @@ import errorhandling.ConsoleHelper;
 import errorhandling.TeamGGException;
 import errorhandling.customexception.FileNotFoundException;
 import errorhandling.customexception.FilePathIsEmptyException;
+import errorhandling.customexception.MatchInfoUpdateFailedException;
 import teamgg.data.relationship.dto.RelationshipEnriched;
 
 public class MatchGrid extends JLabel{
@@ -25,7 +26,6 @@ public class MatchGrid extends JLabel{
 	private String matchHistoryFilePath = "resources/ui/matchGrid.html";
 	private static final String NEW_ROW_PLAYER_HTML = ""+
 			"<tr>   \r\n" + 
-			"	<th>%s</th> \r\n" + 
 			"	<th>%s</th>\r\n" + 
 			"	<th>%s</th>  \r\n" + 
 			"	<th>%s</th>  \r\n" + 
@@ -37,9 +37,17 @@ public class MatchGrid extends JLabel{
 	public MatchGrid() throws TeamGGException{
 		setVisible(true);
 	
-		matchHistoryHtml = ReadFile.read(matchHistoryFilePath);
+		initMatchHistory();
 		
 		updateMatchInfo();
+	}
+
+	private void initMatchHistory() throws FileNotFoundException {
+		try {
+			matchHistoryHtml = ReadFile.read(matchHistoryFilePath);
+		} catch (FilePathIsEmptyException | FileNotFoundException e) {
+			throw new FileNotFoundException();
+		}
 	}
 	
 	/**
@@ -56,17 +64,19 @@ public class MatchGrid extends JLabel{
 	 * 
 	 * @param value
 	 * @param update
+	 * @throws MatchInfoUpdateFailedException 
 	 */
 	@SuppressWarnings("unchecked")
-	public void setRelationships(Object value, boolean update) {
+	public void setRelationships(Object value, boolean update) throws MatchInfoUpdateFailedException {
 		setRelationships((List<RelationshipEnriched>) value, update);
 		
 	}
 	/**
 	 * 
 	 * @param relationships
+	 * @throws MatchInfoUpdateFailedException 
 	 */
-	public void setRelationships(List<RelationshipEnriched> relationships, boolean update) {
+	public void setRelationships(List<RelationshipEnriched> relationships, boolean update) throws MatchInfoUpdateFailedException {
 		this.relationships = relationships;
 		checkUpdate(update);
 	}
@@ -82,8 +92,14 @@ public class MatchGrid extends JLabel{
 	/**
 	 * 
 	 * @param relationships
+	 * @throws MatchInfoUpdateFailedException 
 	 */
-	public void updateMatchInfo() {
+	public void updateMatchInfo() throws MatchInfoUpdateFailedException {
+		try {
+			initMatchHistory();
+		} catch (FileNotFoundException e) {
+			throw new MatchInfoUpdateFailedException();
+		}
 		List<RelationshipEnriched> relationships = getRelationships();
 		
 		for (int i = 0; i < relationships.size(); i++) {
@@ -110,14 +126,14 @@ public class MatchGrid extends JLabel{
 	 */
 	public String getNewRowPlayer(RelationshipEnriched relationship) {
 		
-		return String.format(NEW_ROW_PLAYER_HTML, relationship.getAccountId2(), relationship.getSummoner2(), 
+		return String.format(NEW_ROW_PLAYER_HTML, relationship.getSummoner2(), 
 				relationship.getWonWith(), relationship.getLostWith(),
-				relationship.getWonAgainst(), relationship.getLostWith());
+				relationship.getWonAgainst(), relationship.getLostAgainst());
 	}
 
 	
 	
-	private void checkUpdate(boolean update) {
+	private void checkUpdate(boolean update) throws MatchInfoUpdateFailedException {
 		if (update) {
 			updateMatchInfo();
 		}
