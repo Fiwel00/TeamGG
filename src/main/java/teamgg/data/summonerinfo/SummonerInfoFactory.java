@@ -19,7 +19,7 @@ import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
 
 import teamgg.data.summonerinfo.dto.SummonerInfo;
-import teamgg.database.fields.PlayersFieldsEnum;
+import teamgg.database.fields.PlayersDBFields;
 
 public class SummonerInfoFactory {
 
@@ -34,13 +34,13 @@ public class SummonerInfoFactory {
 	public static SummonerInfo createSummmonerInfo(Document summonerDocument) {
 		SummonerInfo summonerInfo = new SummonerInfo();
 		
-		summonerInfo.setAccountId(summonerDocument.getString(PlayersFieldsEnum.ACCOUNT_ID.toString()));
-		summonerInfo.setSummonerId(summonerDocument.getString(PlayersFieldsEnum.SUMMONER_ID.toString()));
-		summonerInfo.setName(summonerDocument.getString(PlayersFieldsEnum.SUMMONER_NAME.toString()));
-		summonerInfo.setProfileIconId(summonerDocument.getInteger(PlayersFieldsEnum.PROFILE_ICON_ID.toString()));
-		summonerInfo.setPuuid(summonerDocument.getString(PlayersFieldsEnum.PUU_ID.toString()));
-		summonerInfo.setRevisionDate(summonerDocument.getLong(PlayersFieldsEnum.REVISION_DATE.toString()));
-		summonerInfo.setSummonerLevel(summonerDocument.getLong(PlayersFieldsEnum.SUMMONER_LEVEL.toString()));
+		summonerInfo.setAccountId(summonerDocument.getString(PlayersDBFields.ACCOUNT_ID.toString()));
+		summonerInfo.setSummonerId(summonerDocument.getString(PlayersDBFields.SUMMONER_ID.toString()));
+		summonerInfo.setName(summonerDocument.getString(PlayersDBFields.SUMMONER_NAME.toString()));
+		summonerInfo.setProfileIconId(summonerDocument.getInteger(PlayersDBFields.PROFILE_ICON_ID.toString()));
+		summonerInfo.setPuuid(summonerDocument.getString(PlayersDBFields.PUU_ID.toString()));
+		summonerInfo.setRevisionDate(summonerDocument.getLong(PlayersDBFields.REVISION_DATE.toString()));
+		summonerInfo.setSummonerLevel(summonerDocument.getLong(PlayersDBFields.SUMMONER_LEVEL.toString()));
 		
 		marshall(summonerInfo);
 		

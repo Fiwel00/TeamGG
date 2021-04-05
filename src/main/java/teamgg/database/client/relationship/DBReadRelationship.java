@@ -22,7 +22,7 @@ import teamgg.data.relationship.RelationshipUIFactory;
 import teamgg.data.relationship.dto.Relationship;
 import teamgg.data.relationship.dto.RelationshipEnriched;
 import teamgg.database.MongoTeamGGClient;
-import teamgg.database.fields.PlayersFieldsEnum;
+import teamgg.database.fields.PlayersDBFields;
 import teamgg.database.fields.RelationshipDBFields;
 import teamgg.database.fields.RelationshipFieldsUIEnum;
 
@@ -77,7 +77,7 @@ public class DBReadRelationship extends MongoTeamGGClient{
 			String fieldSummoner1 = RelationshipFieldsUIEnum.SUMMONER_1.toString();
 			String fieldSummoner2 = RelationshipFieldsUIEnum.SUMMONER_2.toString();
 
-			String fieldAccount = PlayersFieldsEnum.ACCOUNT_ID.toString();
+			String fieldAccount = PlayersDBFields.ACCOUNT_ID.toString();
 
 			Bson filterAccountID1 = eq(fieldAccount1, accountId);
 			Bson filterAccountID2 = eq(fieldAccount2, accountId);

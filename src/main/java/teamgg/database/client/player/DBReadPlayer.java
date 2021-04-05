@@ -11,7 +11,7 @@ import errorhandling.TeamGGException;
 import teamgg.data.summonerinfo.SummonerInfoFactory;
 import teamgg.data.summonerinfo.dto.SummonerInfo;
 import teamgg.database.MongoTeamGGClient;
-import teamgg.database.fields.PlayersFieldsEnum;
+import teamgg.database.fields.PlayersDBFields;
 
 public class DBReadPlayer extends MongoTeamGGClient{
 
@@ -26,13 +26,13 @@ public class DBReadPlayer extends MongoTeamGGClient{
 	 * @return
 	 * @throws TeamGGException
 	 */
-	public static SummonerInfo readPlayer(PlayersFieldsEnum field, String summonerIdentifier) throws TeamGGException {
+	public static SummonerInfo readPlayer(PlayersDBFields field, String summonerIdentifier) throws TeamGGException {
 		
 		SummonerInfo summonerInfo = null;
 		try (MongoClient client = createNewMongoInstance()) {
 			ConsoleHelper.info("Searching DB Player Collection %s" , field.toString(), summonerIdentifier);
 			
-			if (field.equals(PlayersFieldsEnum.SUMMONER_NAME_LW)) {
+			if (field.equals(PlayersDBFields.SUMMONER_NAME_LW)) {
 				summonerIdentifier = summonerIdentifier.toLowerCase();
 			}
 			

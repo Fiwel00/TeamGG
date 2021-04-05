@@ -1,6 +1,6 @@
 package teamgg.database.fields;
 
-public enum PlayersFieldsEnum {
+public enum PlayersDBFields {
 
 	SUMMONER_NAME,
 	SUMMONER_NAME_LW,

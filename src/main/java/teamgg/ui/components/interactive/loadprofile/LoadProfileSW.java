@@ -26,7 +26,7 @@ import teamgg.database.client.player.DBReadPlayer;
 import teamgg.database.client.player.DBWritePlayer;
 import teamgg.database.client.relationship.DBReadRelationship;
 import teamgg.database.client.relationship.DBWriteRelationship;
-import teamgg.database.fields.PlayersFieldsEnum;
+import teamgg.database.fields.PlayersDBFields;
 
 public class LoadProfileSW extends SwingWorker<Integer, Void>{
 
@@ -34,6 +34,8 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	@Override
 	protected Integer doInBackground() throws TeamGGException {
 
+		long currentTimeMillis = System.currentTimeMillis() - ((24*60*60*1000) * 7);
+		
 		String summonerName = ProfileInformation.getSummonerNameInput();
 		ConsoleHelper.info("Summoner name in input is %s", summonerName);
 		
@@ -43,14 +45,19 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 			ConsoleHelper.info("Database yielded no result, loading from api");
 			
 			summoner = ApiLeagueOfLegends.loadPlayerOri(summonerName);
-			updateDatabase(summoner);
+			addPlayerToDB(summoner);
+		} else if (summoner.getRevisionDate() < currentTimeMillis) {
+			ConsoleHelper.info("Database entry is too old, updating ");
+			
+			summoner = ApiLeagueOfLegends.loadPlayerOri(summonerName);
+			updatePlayerToDB(summoner);
 		}
 		
 		updateUI(summoner);
 
 		
 		
-		loadMatchHistory(summoner);
+		//loadMatchHistory(summoner);
 		return 1;
 	}
 
@@ -153,7 +160,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 * @throws TeamGGException 
 	 */
 	private boolean isPlayerInDb(Summoner summoner) throws TeamGGException {
-		return DBReadPlayer.readPlayer(PlayersFieldsEnum.ACCOUNT_ID, summoner.getAccountId()) == null ? false : true;
+		return DBReadPlayer.readPlayer(PlayersDBFields.ACCOUNT_ID, summoner.getAccountId()) == null ? false : true;
 	}
 
 
@@ -300,10 +307,22 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 * @param summonerInfo
 	 * @throws TeamGGException
 	 */
-	private void updateDatabase(SummonerInfo summonerInfo) throws TeamGGException {
+	private void addPlayerToDB(SummonerInfo summonerInfo) throws TeamGGException {
 		DBWritePlayer.addNewPlayer(summonerInfo);
 	}
 
+	
+	/**
+	 * 
+	 * @param summonerInfo
+	 * @throws TeamGGException
+	 */
+	private void updatePlayerToDB(SummonerInfo summoner) throws TeamGGException {
+		DBWritePlayer.updatePlayer(summoner);
+	}
+
+	
+	
 	/**
 	 * 
 	 * @param summonerInfo
@@ -322,7 +341,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 */
 	private SummonerInfo checkDataBase(String summonerName) throws TeamGGException {
 		ConsoleHelper.info("Checking database");
-		return DBReadPlayer.readPlayer(PlayersFieldsEnum.SUMMONER_NAME_LW, summonerName);
+		return DBReadPlayer.readPlayer(PlayersDBFields.SUMMONER_NAME_LW, summonerName);
 		
 	}
 	
