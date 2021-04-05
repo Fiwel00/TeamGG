@@ -39,6 +39,10 @@
 		    <groupId>com.merakianalytics.orianna</groupId>
 		    <artifactId>orianna</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<resources>
@@ -86,17 +90,22 @@
 			    <version>1.2.3</version>
 			</dependency>
 			<!-- Official maven version -->
-			 <!-- <dependency>
+			 <dependency>
 			    <groupId>com.merakianalytics.orianna</groupId>
 			    <artifactId>orianna</artifactId>
-			    <version>4.0.0-rc6</version>
-			</dependency> -->
+			    <version>4.0.0-rc7</version>
+			</dependency> 
 			<!-- Official latest build -->
-			<dependency>
+			<!-- dependency>
 			    <groupId>com.merakianalytics.orianna</groupId>
 			    <artifactId>orianna</artifactId>
 			    <version>4.0.0-SNAPSHOT</version>
-			  </dependency>
+			</dependency-->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.12.0</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<repositories>
