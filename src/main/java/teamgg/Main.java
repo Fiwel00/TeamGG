@@ -9,7 +9,7 @@ import teamgg.ui.views.MainView;
 
 public class Main {
 
-	private static final String CONFIG_FILE_PATH = "resources/configuration/config.properties";
+	private static final String CONFIG_FILE_PATH = "\\TeamGG\\src\\main\\java\\resources\\configuration\\config.properties";
 
 	public static void main(String[] args) {
 
