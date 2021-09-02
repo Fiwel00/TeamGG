@@ -1,6 +1,9 @@
 package common.filehelper;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +11,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import errorhandling.ConsoleHelper;
 import errorhandling.TeamGGException;
 import errorhandling.customexception.FileNotFoundException;
 import errorhandling.customexception.FilePathIsEmptyException;
@@ -25,18 +29,39 @@ public class ReadFile {
 
 	/**
 	 * 
-	 * @param filePath
+	 * @param relativPath
 	 * @return
+	 * @throws IOException
 	 * @throws FilePathIsEmptyException
 	 * @throws FileNotFoundException
 	 */
-	public static InputStream getFileInputStream(String filePath) throws TeamGGException {
+	public static InputStream getFileInputStream(String relativPath) throws TeamGGException {
 		
-		checkFilePathIsDefined(filePath);
-		InputStream inputStream = ReadFile.class.getClassLoader().getResourceAsStream(filePath);
-		checkInputStreamIsLoaded(inputStream);
+		ConsoleHelper.info("current working directory path: %s", getWorkspacePath());
+		checkFilePathIsDefined(relativPath);
+
+		String absolutPath = getAbsolutPath(relativPath);
+		ConsoleHelper.info("searching file path %s", absolutPath);
+
+        File configFile = new File(absolutPath);
 		
-		return inputStream;
+		return createInputStream(configFile);
+	}
+
+	private static FileInputStream createInputStream(File configFile) throws TeamGGException{
+		try {
+			return new FileInputStream(configFile);
+		} catch (java.io.FileNotFoundException e) {
+			throw new FileNotFoundException();
+		}
+	}
+	
+	private static String getAbsolutPath(String filePath) {
+		return getWorkspacePath() + filePath;
+	}
+
+	private static String getWorkspacePath() {
+		return System.getProperty("user.dir");
 	}
 	
 	/**
