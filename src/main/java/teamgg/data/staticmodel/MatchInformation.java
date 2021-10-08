@@ -36,7 +36,7 @@ public class MatchInformation {
 	}
 
 	public static void setRelationships(List<RelationshipEnriched> relationships, boolean update) throws InvalidUpdatePipelineException, MatchInfoUpdateFailedException {
-		ConsoleHelper.info("update relationships in ui  %s", update);
+		ConsoleHelper.info(MatchInformation.class, "update relationships in ui  %s", update);
 		MatchInformation.relationships = relationships;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.MATCH_GRID, getRelationships()));
 

@@ -18,13 +18,20 @@ import errorhandling.customexception.FilePathIsEmptyException;
 
 public class ReadFile {
 
-	public static String read(String filePath) throws FilePathIsEmptyException, FileNotFoundException {
-		InputStream inputStream = ReadFile.class.getClassLoader().getResourceAsStream(filePath);
-		checkInputStreamIsLoaded(inputStream);
+	public static String read(String filePath) throws FileNotFoundException {
+		try {
+			ConsoleHelper.info(ReadFile.class, "reading file from pah: %s", filePath);
+			InputStream inputStream = ReadFile.class.getClassLoader().getResourceAsStream(filePath);
+			checkInputStreamIsLoaded(inputStream);
+			
+			InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+			
+			return new BufferedReader(streamReader).lines().collect(Collectors.joining("\n"));
 		
-		InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-		
-		return new BufferedReader(streamReader).lines().collect(Collectors.joining("\n"));
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException();
+		}
+	
 	}
 
 	/**
@@ -37,11 +44,11 @@ public class ReadFile {
 	 */
 	public static InputStream getFileInputStream(String relativPath) throws TeamGGException {
 		
-		ConsoleHelper.info("current working directory path: %s", getWorkspacePath());
+		ConsoleHelper.info(ReadFile.class, "current working directory path: %s", getWorkspacePath());
 		checkFilePathIsDefined(relativPath);
 
 		String absolutPath = getAbsolutPath(relativPath);
-		ConsoleHelper.info("searching file path %s", absolutPath);
+		ConsoleHelper.info(ReadFile.class, "searching file path %s", absolutPath);
 
         File configFile = new File(absolutPath);
 		

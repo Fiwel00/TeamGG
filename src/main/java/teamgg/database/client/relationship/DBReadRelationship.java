@@ -51,7 +51,7 @@ public class DBReadRelationship extends MongoTeamGGClient{
 			}
 			
 			if ((relationshipDocument == null ) == false) {
-				ConsoleHelper.info(relationshipDocument.toJson());
+				ConsoleHelper.info(DBReadRelationship.class, relationshipDocument.toJson());
 				relationShip = RelationshipFactory.createRelationship(relationshipDocument);
 			}
 		}
@@ -86,7 +86,7 @@ public class DBReadRelationship extends MongoTeamGGClient{
 			
 			Bson match = Aggregates.match(or(filterAccountID1,filterAccountID2));
 			
-			ConsoleHelper.info("%s %s %s %s",playCollectionName,  fieldAccount1, fieldAccount, fieldSummoner1);
+			ConsoleHelper.info(DBReadRelationship.class, "%s %s %s %s",playCollectionName,  fieldAccount1, fieldAccount, fieldSummoner1);
 			
 			Bson lookupSum1 = lookup(playCollectionName,  fieldAccount1, fieldAccount, fieldSummoner1);
 			Bson lookupSum2 = lookup(playCollectionName, fieldAccount2, fieldAccount, fieldSummoner2);
@@ -94,10 +94,10 @@ public class DBReadRelationship extends MongoTeamGGClient{
 			List<Document> readDocuments = getRelationshipColletion().aggregate(asList(match, lookupSum1, lookupSum2)).into(new ArrayList<Document>());
 			relationshipsDocument.addAll(readDocuments);
 			
-			ConsoleHelper.info(String.valueOf(relationshipsDocument.size()));
+			ConsoleHelper.info(DBReadRelationship.class, String.valueOf(relationshipsDocument.size()));
 			for (Document relationshipDocument : relationshipsDocument) {
 				
-			ConsoleHelper.info("document %s", relationshipDocument.toJson());
+			ConsoleHelper.info(DBReadRelationship.class, "document %s", relationshipDocument.toJson());
 			}
 			
 			if ((relationshipsDocument.isEmpty() ) == false) {

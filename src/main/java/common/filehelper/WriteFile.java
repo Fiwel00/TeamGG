@@ -21,7 +21,7 @@ public class WriteFile {
 			for (RelationshipEnriched relationshipUI : readRelationShips) {
 
 				String marshall = urlConnectionWrapper.marshall(relationshipUI);
-				ConsoleHelper.info(marshall);
+				ConsoleHelper.info(WriteFile.class, marshall);
 				myWriter.write(marshall);
 
 			}

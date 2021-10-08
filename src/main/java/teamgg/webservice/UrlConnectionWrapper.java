@@ -88,12 +88,12 @@ public class UrlConnectionWrapper<T> {
 
 		try {
 
-			ConsoleHelper.info("URL call : " + this.getUrl() + "?" + params);
+			ConsoleHelper.info(this.getClass(), "URL call : " + this.getUrl() + "?" + params);
 			HttpURLConnection connection = (HttpURLConnection) urlConnector.openConnection();
 			connection.setRequestMethod("GET");
 
 			int responseCode = connection.getResponseCode();
-			ConsoleHelper.info("\nStatus: " + responseCode);
+			ConsoleHelper.info(this.getClass(), "\nStatus: " + responseCode);
 
 			Object content = null;
 			switch (responseCode) {

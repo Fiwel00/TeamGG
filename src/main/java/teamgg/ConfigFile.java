@@ -86,7 +86,7 @@ public class ConfigFile {
 
 		checkPropertyValueIsDefined(propertyValue);
 		
-		ConsoleHelper.info(String.format("Getting property %s, value: %s", property, propertyValue));
+		ConsoleHelper.info(ConfigFile.class, String.format("Getting property %s, value: %s", property, propertyValue));
 		
 		return propertyValue; 
 	}

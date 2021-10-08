@@ -29,7 +29,7 @@ public class DBReadMatch extends MongoTeamGGClient{
 			Document matchDocument = getMatchesColletion().find(eq(MatchesFieldEnum.GAME_ID.toString(), gameId)).first();
 			
 			if ((matchDocument == null ) == false) {
-				ConsoleHelper.info(matchDocument.toJson());
+				ConsoleHelper.info(Match.class, matchDocument.toJson());
 				match = MatchFactory.createMatch(matchDocument);
 			}
 		}

@@ -30,7 +30,7 @@ public class DBReadPlayer extends MongoTeamGGClient{
 		
 		SummonerInfo summonerInfo = null;
 		try (MongoClient client = createNewMongoInstance()) {
-			ConsoleHelper.info("Searching DB Player Collection %s" , field.toString(), summonerIdentifier);
+			ConsoleHelper.info(SummonerInfo.class, "Searching DB Player Collection %s" , field.toString(), summonerIdentifier);
 			
 			if (field.equals(PlayersDBFields.SUMMONER_NAME_LW)) {
 				summonerIdentifier = summonerIdentifier.toLowerCase();
@@ -39,7 +39,7 @@ public class DBReadPlayer extends MongoTeamGGClient{
 			Document summonerDocument = getPlayersColletion().find(eq(field.toString(), summonerIdentifier)).first();
 			
 			if ((summonerDocument == null ) == false) {
-				ConsoleHelper.info(summonerDocument.toJson());
+				ConsoleHelper.info(SummonerInfo.class, summonerDocument.toJson());
 				summonerInfo = SummonerInfoFactory.createSummmonerInfo(summonerDocument);
 				
 			}

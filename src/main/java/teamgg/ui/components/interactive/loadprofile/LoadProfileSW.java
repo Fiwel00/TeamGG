@@ -37,17 +37,17 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 		long currentTimeMinus10Days = System.currentTimeMillis() - ((24*60*60*1000) * 10);
 		
 		String summonerName = ProfileInformation.getSummonerNameInput();
-		ConsoleHelper.info("Summoner name in input is %s", summonerName);
+		ConsoleHelper.info(this.getClass(), "Summoner name in input is %s", summonerName);
 		
 		SummonerInfo summoner = checkDataBase(summonerName);
 		
 		if (summoner == null) {
-			ConsoleHelper.info("Database yielded no result, loading from api");
+			ConsoleHelper.info(this.getClass(), "Database yielded no result, loading from api");
 			
 			summoner = ApiLeagueOfLegends.loadPlayerOri(summonerName);
 			addPlayerToDB(summoner);
 		} else if (summoner.getRevisionDate() < currentTimeMinus10Days) {
-			ConsoleHelper.info("Database entry is too old, updating ");
+			ConsoleHelper.info(this.getClass(), "Database entry is too old, updating ");
 			
 			summoner = ApiLeagueOfLegends.loadPlayerOri(summonerName);
 			updatePlayerToDB(summoner);
@@ -107,7 +107,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 			
 			int loadedMatches = matchHistory.size();
 			loadedMatchesTotal += loadedMatches; 
-			ConsoleHelper.info("Loaded %s matches", loadedMatches);
+			ConsoleHelper.info(this.getClass(), "Loaded %s matches", loadedMatches);
 			if(loadedMatches != 100) {
 				break playerMatchHistorySearch;
 			}
@@ -116,7 +116,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 			loadedNewMatches += matches.size();
 		}
 		
-		ConsoleHelper.info("Stats \nnew players added: %s\nnew relationships added: %s \nnew matches added: %s\n skimmed through %s total matches", playersAdded, relationShipsAdded, loadedNewMatches, loadedMatchesTotal);
+		ConsoleHelper.info(this.getClass(), "Stats \nnew players added: %s\nnew relationships added: %s \nnew matches added: %s\n skimmed through %s total matches", playersAdded, relationShipsAdded, loadedNewMatches, loadedMatchesTotal);
 		
 	}
 
@@ -133,9 +133,9 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 			
 			Summoner summoner = player.getSummoner();
 			
-			ConsoleHelper.info("Checking if player is in DB Account: %s\n SummonerId: %s\nSummonerName: %s", summoner.getAccountId(), summoner.getId(), summoner.getName());
+			ConsoleHelper.info(this.getClass(), "Checking if player is in DB Account: %s\n SummonerId: %s\nSummonerName: %s", summoner.getAccountId(), summoner.getId(), summoner.getName());
 			if(isPlayerInDb(summoner) == false) {
-				ConsoleHelper.info("Player doesn't exist adding him to Database");
+				ConsoleHelper.info(this.getClass(), "Player doesn't exist adding him to Database");
 				addToDb(summoner);
 				updatedSummoners++;
 			}
@@ -326,9 +326,9 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	/**
 	 * 
 	 * @param summonerInfo
-	 * @throws InvalidUpdatePipelineException 
+	 * @throws TeamGGException
 	 */
-	private void updateUI(SummonerInfo summonerInfo) throws InvalidUpdatePipelineException {
+	private void updateUI(SummonerInfo summonerInfo) throws TeamGGException {
 		ProfileInformation.setSummonerInfo(summonerInfo, true);
 	}
 
@@ -340,7 +340,7 @@ public class LoadProfileSW extends SwingWorker<Integer, Void>{
 	 * @throws TeamGGException
 	 */
 	private SummonerInfo checkDataBase(String summonerName) throws TeamGGException {
-		ConsoleHelper.info("Checking database");
+		ConsoleHelper.info(this.getClass(), "Checking database");
 		return DBReadPlayer.readPlayer(PlayersDBFields.SUMMONER_NAME_LW, summonerName);
 		
 	}

@@ -33,7 +33,7 @@ public class RelationshipUIFactory {
 
 		RelationshipEnriched relationshipUI = new RelationshipEnriched(relationship);
 		
-		ConsoleHelper.info("document %s", relationshipDocument.toJson());
+		ConsoleHelper.info(RelationshipUIFactory.class, "document %s", relationshipDocument.toJson());
 		
 		List<Document> object = (List<Document>) relationshipDocument.get(RelationshipFieldsUIEnum.SUMMONER_1.toString());
 		SummonerInfo summmonerInfo = SummonerInfoFactory.createSummmonerInfo(object.get(0));

@@ -6,6 +6,8 @@ import common.stringhelper.StringBuilderExtended;
 
 public class ConsoleHelper {
 	
+	private static final String INFO_MESSAGE_FORMAT = "Info: %s> %s";
+
 	private ConsoleHelper() {};
 	
 	/**
@@ -29,35 +31,40 @@ public class ConsoleHelper {
 
 	/**
 	 * print the mesage in the system console as info
+	 * @param <T>
+	 * @param Class
 	 * @param info
 	 */
-	public static void info(String info) {
-		System.out.println(info);
+	public static <T> void info(Class<T> classname, String info) {
+		System.out.println(String.format(INFO_MESSAGE_FORMAT, classname.toString(), info));
 	}
 	
 	/**
 	 *  print the mesage in the system console as info
+	 * @param <T>
 	 * @param format
 	 * @param args
 	 */
-	public static void info(String format, Object... args) {
-		info(String.format(format, args));
+	public static <T> void info(Class<T> classname, String format, Object... args) {
+		info(classname, String.format(format, args));
 	}
 	
 	/**
 	 * print the mesage in the system console as info
+	 * @param <T>
 	 * @param info
 	 */
-	public static void info(StringBuffer info) {
-		System.out.println(info);
+	public static <T> void info(Class<T> classname, StringBuffer info) {
+		System.out.println(String.format(INFO_MESSAGE_FORMAT, classname.toString(), info));
 		
 	}
 	/**
 	 * print the mesage in the system console as info
+	 * @param <T>
 	 * @param info
 	 */
-	public static void info(Reader info) {
-		System.out.println(info);
+	public static <T> void info(Class<T> classname, Reader info) {
+		System.out.println(String.format(INFO_MESSAGE_FORMAT, classname.toString(), info));
 		
 	}
 	
