@@ -1,9 +1,7 @@
-package teamgg.ui.components.matchInfo;
+package teamgg.ui.components.staticelement.matchInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JLabel;
 
 import common.filehelper.ReadFile;
 import errorhandling.ConsoleHelper;
@@ -12,8 +10,9 @@ import errorhandling.customexception.FileNotFoundException;
 import errorhandling.customexception.FilePathIsEmptyException;
 import errorhandling.customexception.MatchInfoUpdateFailedException;
 import teamgg.data.relationship.dto.RelationshipEnriched;
+import teamgg.ui.components.staticelement.StaticComponent;
 
-public class MatchGrid extends JLabel{
+public class MatchGrid extends StaticComponent{
 
 	/**
 	 * 
@@ -23,7 +22,6 @@ public class MatchGrid extends JLabel{
 	private List<RelationshipEnriched> relationships;
 
 	private String matchHistoryHtml;
-	private String matchHistoryFilePath = "resources/ui/matchGrid.html";
 	private static final String NEW_ROW_PLAYER_HTML = ""+
 			"<tr>   \r\n" + 
 			"	<th>%s</th>\r\n" + 
@@ -35,19 +33,19 @@ public class MatchGrid extends JLabel{
 	
 	
 	public MatchGrid() throws TeamGGException{
-		setVisible(true);
+		super("resources/ui/matchGrid.html");
 	
-		initMatchHistory();
-		
-		updateMatchInfo();
+		init();
 	}
 
-	private void initMatchHistory() throws FileNotFoundException {
+	@Override
+	protected void init() throws FileNotFoundException {
 		try {
-			matchHistoryHtml = ReadFile.read(matchHistoryFilePath);
+			matchHistoryHtml = ReadFile.read(COMPONENT_FILE_PATH);
 		} catch (FilePathIsEmptyException | FileNotFoundException e) {
 			throw new FileNotFoundException();
 		}
+		update();
 	}
 	
 	/**
@@ -94,9 +92,11 @@ public class MatchGrid extends JLabel{
 	 * @param relationships
 	 * @throws MatchInfoUpdateFailedException 
 	 */
-	public void updateMatchInfo() throws MatchInfoUpdateFailedException {
+	
+	@Override
+	public void update() throws MatchInfoUpdateFailedException {
 		try {
-			initMatchHistory();
+			init();
 		} catch (FileNotFoundException e) {
 			throw new MatchInfoUpdateFailedException();
 		}
@@ -135,7 +135,7 @@ public class MatchGrid extends JLabel{
 	
 	private void checkUpdate(boolean update) throws MatchInfoUpdateFailedException {
 		if (update) {
-			updateMatchInfo();
+			update();
 		}
 	}
-}
+
