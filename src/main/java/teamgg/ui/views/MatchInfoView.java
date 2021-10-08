@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 
 import errorhandling.TeamGGException;
 import teamgg.ui.components.interactive.loadmatchistory.LoadMatchHistoryButton;
-import teamgg.ui.components.matchInfo.MatchGrid;
+import teamgg.ui.components.staticelement.matchInfo.MatchGrid;
 
 public class MatchInfoView extends JPanel {
 

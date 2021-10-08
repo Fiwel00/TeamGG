@@ -5,9 +5,10 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import errorhandling.TeamGGException;
 import teamgg.ui.components.interactive.loadprofile.LoadProfileButton;
 import teamgg.ui.components.interactive.summonerinput.SummonerInput;
-import teamgg.ui.components.profileinfo.ProfileInfo;
+import teamgg.ui.components.staticelement.profileinfo.ProfileInfo;
 
 public class ProfileView extends JPanel{
 
@@ -21,7 +22,7 @@ public class ProfileView extends JPanel{
 	private static SummonerInput summonerInput;
 	
 	
-	public ProfileView() {
+	public ProfileView() throws TeamGGException {
 		setVisible(true);
 		setBackground(Color.GRAY);
 

@@ -3,11 +3,8 @@ package teamgg.ui.components.staticelement.matchInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.filehelper.ReadFile;
 import errorhandling.ConsoleHelper;
 import errorhandling.TeamGGException;
-import errorhandling.customexception.FileNotFoundException;
-import errorhandling.customexception.FilePathIsEmptyException;
 import errorhandling.customexception.MatchInfoUpdateFailedException;
 import teamgg.data.relationship.dto.RelationshipEnriched;
 import teamgg.ui.components.staticelement.StaticComponent;
@@ -33,20 +30,10 @@ public class MatchGrid extends StaticComponent{
 	
 	
 	public MatchGrid() throws TeamGGException{
-		super("resources/ui/matchGrid.html");
+		super("resources/ui/matchGrid");
 	
-		init();
 	}
 
-	@Override
-	protected void init() throws FileNotFoundException {
-		try {
-			matchHistoryHtml = ReadFile.read(COMPONENT_FILE_PATH);
-		} catch (FilePathIsEmptyException | FileNotFoundException e) {
-			throw new FileNotFoundException();
-		}
-		update();
-	}
 	
 	/**
 	 * 
@@ -95,11 +82,6 @@ public class MatchGrid extends StaticComponent{
 	
 	@Override
 	public void update() throws MatchInfoUpdateFailedException {
-		try {
-			init();
-		} catch (FileNotFoundException e) {
-			throw new MatchInfoUpdateFailedException();
-		}
 		List<RelationshipEnriched> relationships = getRelationships();
 		
 		for (int i = 0; i < relationships.size(); i++) {
@@ -113,7 +95,7 @@ public class MatchGrid extends StaticComponent{
 			
 			matchHistoryHtml = String.format(matchHistoryHtml, newRowPlayer);
 		}
-		ConsoleHelper.info("Updating view match history HTML %s", matchHistoryHtml);
+		ConsoleHelper.info(this.getClass(), "Updating view match history HTML %s", matchHistoryHtml);
 		
 		setText(matchHistoryHtml);
 	}
@@ -139,3 +121,4 @@ public class MatchGrid extends StaticComponent{
 		}
 	}
 
+}
