@@ -7,8 +7,10 @@ import errorhandling.TeamGGException;
 import errorhandling.customexception.MatchInfoUpdateFailedException;
 import teamgg.ui.components.staticelement.matchInfo.MatchGrid;
 import teamgg.ui.components.staticelement.profileinfo.ProfileInfo;
+import teamgg.ui.components.staticelement.realtimematchinfo.TeamGrid;
 import teamgg.ui.views.MatchInfoView;
 import teamgg.ui.views.ProfileView;
+import teamgg.ui.views.RealTimeMatchView;
 
 /**
  * 
@@ -86,5 +88,28 @@ public class updateUI {
 		}
 		
 	}
+
+
+    public static void udpateRealTimeMatches(List<FieldIdValues> updateValues) throws TeamGGException {
+		TeamGrid allyTeamGrid = RealTimeMatchView.getAllyTeam();
+		
+		for (FieldIdValues fieldIdValues : updateValues) {
+			
+			Object value = fieldIdValues.getValue();
+			
+			switch (fieldIdValues.getFieldId()) {
+				case ALLY_TEAM:
+					ConsoleHelper.info(updateUI.class, "updating ALLY_TEAM");
+					allyTeamGrid.setPlayers(value, true);
+					break;
+				default:
+					throw new InvalidUpdatePipelineException(fieldIdValues.getFieldId().toString(), value);
+			}
+
+			allyTeamGrid.update();
+			
+		}
+
+    }
 
 }
