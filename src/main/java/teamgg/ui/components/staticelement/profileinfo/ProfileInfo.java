@@ -1,9 +1,6 @@
 package teamgg.ui.components.staticelement.profileinfo;
 
-import javax.swing.JLabel;
-
 import errorhandling.TeamGGException;
-import errorhandling.customexception.FileNotFoundException;
 import teamgg.ui.components.staticelement.StaticComponent;
 
 public class ProfileInfo extends StaticComponent{

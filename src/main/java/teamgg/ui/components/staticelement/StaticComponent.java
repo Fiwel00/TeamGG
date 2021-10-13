@@ -3,7 +3,6 @@ package teamgg.ui.components.staticelement;
 import javax.swing.JLabel;
 
 import common.filehelper.ReadFile;
-import errorhandling.ConsoleHelper;
 import errorhandling.TeamGGException;
 import errorhandling.customexception.FileNotFoundException;
 
