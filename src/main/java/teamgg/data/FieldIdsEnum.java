@@ -9,5 +9,9 @@ public enum FieldIdsEnum {
 	PROFILE_ICON_ID, SUMMONER_NAME_INPUT,
 	
 	//Match History
-	MATCH_GRID
+	MATCH_GRID,
+
+	//Real Time match information
+	ALLY_TEAM,
+	ENNEMY_TEAM
 }
