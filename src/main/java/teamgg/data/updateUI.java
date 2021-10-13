@@ -3,9 +3,10 @@ package teamgg.data;
 import java.util.List;
 
 import errorhandling.ConsoleHelper;
+import errorhandling.TeamGGException;
 import errorhandling.customexception.MatchInfoUpdateFailedException;
-import teamgg.ui.components.matchInfo.MatchGrid;
-import teamgg.ui.components.profileinfo.ProfileInfo;
+import teamgg.ui.components.staticelement.matchInfo.MatchGrid;
+import teamgg.ui.components.staticelement.profileinfo.ProfileInfo;
 import teamgg.ui.views.MatchInfoView;
 import teamgg.ui.views.ProfileView;
 
@@ -21,9 +22,9 @@ public class updateUI {
 	/**
 	 * 
 	 * @param updateValues
-	 * @throws InvalidUpdatePipelineException
+	 * @throws TeamGGException
 	 */
-	public static void updateSummoner(List<FieldIdValues> updateValues) throws InvalidUpdatePipelineException {
+	public static void updateSummoner(List<FieldIdValues> updateValues) throws TeamGGException {
 		
 		for (FieldIdValues fieldIdValues : updateValues) {
 			
@@ -51,7 +52,7 @@ public class updateUI {
 					throw new InvalidUpdatePipelineException(fieldIdValues.getFieldId().toString(), value);
 			}
 			
-			profilInfolabel.updateProfilInfo();
+			profilInfolabel.update();
 			
 		}
 		
@@ -73,14 +74,14 @@ public class updateUI {
 			
 			switch (fieldIdValues.getFieldId()) {
 				case MATCH_GRID:
-					ConsoleHelper.info("updating MATCH_GRID");
+					ConsoleHelper.info(updateUI.class, "updating MATCH_GRID");
 					matchInfoGrid.setRelationships(value, true);
 					break;
 				default:
 					throw new InvalidUpdatePipelineException(fieldIdValues.getFieldId().toString(), value);
 			}
 
-			matchInfoGrid.updateMatchInfo();
+			matchInfoGrid.update();
 			
 		}
 		

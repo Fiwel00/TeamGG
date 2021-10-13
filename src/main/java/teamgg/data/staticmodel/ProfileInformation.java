@@ -3,6 +3,7 @@ package teamgg.data.staticmodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import errorhandling.TeamGGException;
 import teamgg.data.FieldIdValues;
 import teamgg.data.FieldIdsEnum;
 import teamgg.data.InvalidUpdatePipelineException;
@@ -28,7 +29,7 @@ public class ProfileInformation {
 
 	private static List<FieldIdValues> updateValues = new ArrayList<>();
 
-	public static void setSummonerInfo(SummonerInfo summonerInfo, boolean update) throws InvalidUpdatePipelineException {
+	public static void setSummonerInfo(SummonerInfo summonerInfo, boolean update) throws TeamGGException {
 
 		setAccountId(summonerInfo.getAccountId(), false);
 		setSummonerName(summonerInfo.getName(), false);
@@ -38,7 +39,7 @@ public class ProfileInformation {
 		checkUpdate(update);
 	}
 
-	private static void checkUpdate(boolean update) throws InvalidUpdatePipelineException {
+	private static void checkUpdate(boolean update) throws TeamGGException {
 		if (update && updateValues.isEmpty() == false) {
 			updateUI.updateSummoner(updateValues);
 			updateValues = new ArrayList<>();
@@ -50,7 +51,7 @@ public class ProfileInformation {
 		return profileIconId;
 	}
 
-	public static void setProfileIconId(int profileIconId, boolean update) throws InvalidUpdatePipelineException {
+	public static void setProfileIconId(int profileIconId, boolean update) throws TeamGGException {
 		ProfileInformation.profileIconId = profileIconId;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.PROFILE_ICON_ID, getProfileIconId()));
 
@@ -61,7 +62,7 @@ public class ProfileInformation {
 		return summonerLevel;
 	}
 
-	public static void setSummonerLevel(long summonerLevel, boolean update) throws InvalidUpdatePipelineException {
+	public static void setSummonerLevel(long summonerLevel, boolean update) throws TeamGGException {
 		ProfileInformation.summonerLevel = summonerLevel;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.SUMMONER_LEVEL, getSummonerLevel()));
 
@@ -72,7 +73,7 @@ public class ProfileInformation {
 		return summonerName;
 	}
 
-	public static void setSummonerName(String name, boolean update) throws InvalidUpdatePipelineException {
+	public static void setSummonerName(String name, boolean update) throws TeamGGException {
 		ProfileInformation.summonerName = name;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.SUMMONER_NAME, getSummonerName()));
 
@@ -83,7 +84,7 @@ public class ProfileInformation {
 		return accountId;
 	}
 
-	public static void setAccountId(String accountId, boolean update) throws InvalidUpdatePipelineException {
+	public static void setAccountId(String accountId, boolean update) throws TeamGGException {
 		ProfileInformation.accountId = accountId;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.ACCOUNT_ID, getAccountId()));
 
@@ -95,7 +96,7 @@ public class ProfileInformation {
 		return summonerNameInput;
 	}
 
-	public static void setSummonerNameInput(String summonerNameInput, boolean update) throws InvalidUpdatePipelineException {
+	public static void setSummonerNameInput(String summonerNameInput, boolean update) throws TeamGGException {
 		ProfileInformation.summonerNameInput = summonerNameInput;
 		updateValues.add(new FieldIdValues(FieldIdsEnum.SUMMONER_NAME_INPUT, getSummonerName()));
 

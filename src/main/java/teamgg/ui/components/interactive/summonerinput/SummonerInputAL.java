@@ -43,7 +43,7 @@ public class SummonerInputAL implements DocumentListener {
 
 	
 
-	private void updatedSummonerInput() throws InvalidUpdatePipelineException {
+	private void updatedSummonerInput() throws TeamGGException {
 		String summonerName = ProfileView.getSummonerInput().getText();
 		
 		if (summonerName == null) {
