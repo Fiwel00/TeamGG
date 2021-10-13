@@ -1,9 +1,6 @@
 package teamgg.api;
 
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Queue;
 import com.merakianalytics.orianna.types.core.match.Match;
@@ -12,13 +9,8 @@ import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import com.merakianalytics.orianna.types.core.summoner.Summoner.Builder;
 
 import errorhandling.TeamGGException;
-import teamgg.ConfigFile;
-import teamgg.data.match.dto.MatchRaw;
-import teamgg.data.match.dto.Player;
 import teamgg.data.summonerinfo.SummonerInfoFactory;
 import teamgg.data.summonerinfo.dto.SummonerInfo;
-import teamgg.webservice.LoadResponse;
-import teamgg.webservice.UrlConnectionWrapper;
 
 public class ApiLeagueOfLegends {
 
