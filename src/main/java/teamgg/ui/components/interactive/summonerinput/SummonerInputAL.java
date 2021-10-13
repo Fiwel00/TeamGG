@@ -4,18 +4,18 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import errorhandling.TeamGGException;
-import teamgg.data.InvalidUpdatePipelineException;
 import teamgg.data.staticmodel.ProfileInformation;
 import teamgg.ui.views.ProfileView;
 
 public class SummonerInputAL implements DocumentListener {
+
+	//TODO throw errors to Error view / message handler
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		try {
 			updatedSummonerInput();
 		} catch (TeamGGException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -26,7 +26,6 @@ public class SummonerInputAL implements DocumentListener {
 		try {
 			updatedSummonerInput();
 		} catch (TeamGGException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -36,7 +35,6 @@ public class SummonerInputAL implements DocumentListener {
 		try {
 			updatedSummonerInput();
 		} catch (TeamGGException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
